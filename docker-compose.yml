@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    container_name: "app"
+    restart: always
+    ports:
+    - 5000:5000
+    links:
+      - "mongodb"
+    env_file:
+      - .env
+    healthcheck:
+      test: "wget --quiet --tries=1 --spider http://0.0.0.0:5000/health || exit 1"
+      interval: 5s
+      timeout: 1s
+      retries: 3
+    depends_on:
+      mongodb:
+        condition: service_started
+
+  mongodb:
+    build:
+      context: .
+      dockerfile: ./docker/mongodb/Dockerfile
+    container_name: "mongodb"
+    restart: always
+    env_file:
+      - .env.db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    ports:
+      - 27018:27017
+    volumes:
+      - data:/data/db
+
+volumes:
+  data:
