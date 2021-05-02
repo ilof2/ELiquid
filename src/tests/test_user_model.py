@@ -6,16 +6,17 @@ from src.users.models import User
 def test_user_create(user_dict):
     user = User.create(**user_dict)
     assert user
-    assert user.username == "test"
-    assert User.check_password(user.password, "123")
+    assert user.username == user_dict["username"]
+    assert User.check_password(user.password, user_dict["password"])
 
 
 def test_user_create_from_list(ten_users_generator):
-    users = User.create_from_list(ten_users_generator)
+    users_json_list = list(ten_users_generator)
+    users = User.create_from_list(users_json_list)
     assert isinstance(users, Generator)
     users_list = list(users)
-    assert len(users_list) == 10
-    assert users_list[0].username == "test0"
+    assert len(users_list) == len(users_json_list)
+    assert users_list[0].username == users_json_list[0]["username"]
 
 
 def test_uid_is_mutable(user_dict):
