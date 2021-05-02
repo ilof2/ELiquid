@@ -1,10 +1,10 @@
 from typing import Generator
 
-from src.users.models import User
+from users.models import User
 
 
 def test_user_create(user_dict):
-    user = User.create(**user_dict)
+    user = User.create_new(**user_dict)
     assert user
     assert user.username == user_dict["username"]
     assert User.check_password(user.password, user_dict["password"])
@@ -19,9 +19,9 @@ def test_user_create_from_list(ten_users_generator):
     assert users_list[0].username == users_json_list[0]["username"]
 
 
-def test_uid_is_mutable(user_dict):
-    user = User.create(**user_dict)
-    user_uid = user.uid
+def test_id_is_mutable(user_dict):
+    user = User.create_from_dict(**user_dict)
+    user_id = user.uid
     from bson import ObjectId
-    user._uid = ObjectId()
-    assert user_uid != user.uid
+    user.uid = ObjectId()
+    assert user_id != user.uid

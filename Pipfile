@@ -6,8 +6,10 @@ name = "pypi"
 [packages]
 flask = "*"
 python-dotenv = "*"
-flask-pymongo = "*"
 pydantic = "*"
+graphene = "*"
+flask-graphql = "*"
+pymongo = "*"
 
 [dev-packages]
 pytest = "*"

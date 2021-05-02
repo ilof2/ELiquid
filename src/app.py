@@ -1,6 +1,6 @@
 from flask import Flask
-from flask_pymongo import PyMongo
-from config import Config
+from flask_graphql import GraphQLView
+from users.view import authentication_schema
 
 
 def create_app():
@@ -14,6 +14,9 @@ def create_app():
 
 
 app = create_app()
-mongodb_client = PyMongo(app, uri=Config.MONGO_URI)
-db = mongodb_client.db
+app.add_url_rule(
+    "/graphql",
+    view_func=GraphQLView.as_view("graphql", schema=authentication_schema,
+                                  graphiql=True)
+)
 
