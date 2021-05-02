@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  mongodb:
+    build:
+      context: .
+      dockerfile: ./docker/mongodb/Dockerfile
+    container_name: "mongodb"
+    restart: always
+    env_file:
+      - .env.db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    ports:
+      - 27018:27017
+    volumes:
+      - /home/barry/mongodb/database:/data/db
+
+
+volumes:
+  data:
