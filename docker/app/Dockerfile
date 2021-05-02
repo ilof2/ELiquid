@@ -12,7 +12,7 @@ COPY Pipfile .
 COPY Pipfile.lock .
 RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --system
 
-FROM python:3.8
+FROM python:3.8.5
 
 ENV PYTHONUNBUFFERED 1
 ENV LIBRARY_PATH=/lib:/usr/lib
@@ -32,4 +32,4 @@ RUN mkdir -p /opt/app/data
 
 VOLUME ["/opt/app/data"]
 RUN pip3 install python-dotenv
-CMD ["python3", "app.py"]
+CMD ["python3", "wsgi.py"]
