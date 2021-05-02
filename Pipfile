@@ -7,8 +7,10 @@ name = "pypi"
 flask = "*"
 python-dotenv = "*"
 flask-pymongo = "*"
+pydantic = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.8"
