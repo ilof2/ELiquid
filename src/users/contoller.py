@@ -1,4 +1,5 @@
 from typing import Generator, List
+from pymongo.collection import Collection
 
 from bson import ObjectId
 
@@ -6,25 +7,19 @@ from database import mongodb_client
 from users.models import User
 from config import Config
 
-conn = mongodb_client[Config.MONGO_DB_NAME].users
+conn: Collection = mongodb_client[Config.MONGO_DB_NAME].users
 
 
-def insert_user(user: 'User', users_conn=conn):
-    result = users_conn.insert_one(user.dict())
+def insert_user(user: 'User', users_conn: Collection = conn):
+    result = users_conn.insert_one(user.dict(exclude={"uid", }))
     user.uid = result.inserted_id
     return user
 
 
-def update_user(user: 'User', users_conn=conn) -> 'User':
+def update_user(user: 'User', users_conn: Collection = conn) -> 'User':
     obj = user.dict(exclude={"uid", "password"})
     users_conn.update_one({'_id': user.uid}, {"$set": obj})
     return user
-
-
-def update_users(users: List['User'], users_conn=conn):
-    def return_user_as_dict(user):
-        return user.dict(exclude={"uid", "password"})
-    users_conn.update_many(map(return_user_as_dict, users))
 
 
 def is_user_exist(_id: ObjectId) -> bool:
@@ -35,11 +30,6 @@ def is_user_exist(_id: ObjectId) -> bool:
 def is_user_exist_by_email(email: str) -> bool:
     user = get_user_by_email(email)
     return bool(user)
-
-
-def get_users(users_conn=conn) -> Generator:
-    users: list = users_conn.find({})
-    return User.create_from_list(users)
 
 
 def get_user_by_id(_id: ObjectId, users_conn=conn) -> 'User' or None:
@@ -60,7 +50,7 @@ def get_user_by_email(email: str, users_conn=conn) -> 'User':
         return user
 
 
-def login(email, password) -> 'User' or None:
-    user = get_user_by_email(email)
+def login(email, password, users_conn=conn) -> 'User' or None:
+    user = get_user_by_email(email=email, users_conn=users_conn)
     if user.check_password(password=password, pwhash=user.password):
         return user

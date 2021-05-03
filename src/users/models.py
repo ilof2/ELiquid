@@ -13,7 +13,7 @@ class User(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
-    
+
     @classmethod
     def create_from_dict(cls, *args, **kwargs) -> 'User':
         email = kwargs["email"]

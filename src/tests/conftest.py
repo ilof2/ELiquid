@@ -4,6 +4,7 @@ from pytest import fixture
 from pymongo import MongoClient
 
 from config import Config
+from users import User
 
 
 @fixture()
@@ -15,6 +16,11 @@ def user_dict():
         "email": "test@test.com",
     }
     return obj
+
+
+@fixture()
+def user_obj(user_dict: dict) -> User:
+    return User.create_new(**user_dict)
 
 
 @fixture()
