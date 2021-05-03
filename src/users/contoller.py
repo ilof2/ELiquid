@@ -1,4 +1,3 @@
-from typing import Generator, List
 from pymongo.collection import Collection
 
 from bson import ObjectId
@@ -45,12 +44,12 @@ def get_user(user: 'User', users_conn=conn) -> 'User' or None:
 
 def get_user_by_email(email: str, users_conn=conn) -> 'User':
     user = users_conn.find_one({"email": email})
-    if user:
-        user = User.create_from_dict(**user)
-        return user
+    user = User.create_from_dict(**user) if user else None
+    return user
 
 
 def login(email, password, users_conn=conn) -> 'User' or None:
     user = get_user_by_email(email=email, users_conn=users_conn)
-    if user.check_password(password=password, pwhash=user.password):
+    is_password_right = user.check_password(password=password, pwhash=user.password) if user else False
+    if is_password_right:
         return user
