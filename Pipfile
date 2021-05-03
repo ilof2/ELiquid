@@ -6,11 +6,14 @@ name = "pypi"
 [packages]
 flask = "*"
 python-dotenv = "*"
-flask-pymongo = "*"
 pydantic = "*"
+graphene = "*"
+flask-graphql = "*"
+pymongo = "*"
 
 [dev-packages]
 pytest = "*"
+pytest-mock = "*"
 
 [requires]
 python_version = "3.8"
