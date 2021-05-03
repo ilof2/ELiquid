@@ -53,3 +53,10 @@ def login(email, password, users_conn=conn) -> 'User' or None:
     is_password_right = user.check_password(password=password, pwhash=user.password) if user else False
     if is_password_right:
         return user
+
+
+def register(email, username, password, users_conn=conn) -> 'User':
+    user = User.create_new(username=username, email=email, password=password)
+    user = insert_user(user, users_conn=users_conn)
+    return user
+
