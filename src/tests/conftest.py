@@ -1,5 +1,9 @@
 from bson import ObjectId
+from pymongo.database import Database
 from pytest import fixture
+from pymongo import MongoClient
+
+from config import Config
 
 
 @fixture()
@@ -25,3 +29,12 @@ def ten_users_generator():
             }
             yield obj
     return users()
+
+
+@fixture()
+def test_conn_to_db() -> Database:
+    mongodb_client = MongoClient(Config.TEST_MONGO_URI, retryWrites=False)
+    mongodb_conn = mongodb_client[Config.TEST_MONGO_DB_NAME]
+    yield mongodb_conn
+    mongodb_client.drop_database(Config.TEST_MONGO_DB_NAME)
+    mongodb_client.close()
