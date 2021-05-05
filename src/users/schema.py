@@ -1,4 +1,4 @@
-from graphene import ObjectType, String, Boolean
+from graphene import ObjectType, String
 
 
 class UserSchema(ObjectType):
