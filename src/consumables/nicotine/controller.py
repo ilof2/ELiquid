@@ -22,4 +22,3 @@ def insert_nicotine_many(nicotine: 'Nicotine', nicotine_conn=db_nicotine_connect
 def update_nicotine_one(nicotine: 'Nicotine', nicotine_conn=db_nicotine_connection):
     nicotine_conn.update_one({'_id': nicotine.uid}, {"$set": nicotine.dict()})
     return nicotine
-

@@ -13,4 +13,3 @@ class Flavor(BaseConsumable):
         new_class.flavor_type = new_class.flavor_type.strip()
         new_class.name = new_class.name.strip()
         return new_class
-

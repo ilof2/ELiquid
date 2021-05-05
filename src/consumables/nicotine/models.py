@@ -12,4 +12,3 @@ class Nicotine(BaseConsumable):
         new_class = cls(**kwargs)
         new_class.uid = uid
         return new_class
-
