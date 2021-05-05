@@ -6,7 +6,7 @@ class Flavor(BaseConsumable):
     flavor_type: str
 
     @classmethod
-    def create(cls, *args, **kwargs):
+    def create(cls, *args, **kwargs) -> 'Flavor':
         uid = kwargs.pop("_id")
         new_class = cls(**kwargs)
         new_class.uid = uid

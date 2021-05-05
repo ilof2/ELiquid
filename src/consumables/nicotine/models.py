@@ -1,4 +1,4 @@
-from ..models import BaseConsumable
+from consumables.models import BaseConsumable
 
 
 class Nicotine(BaseConsumable):
@@ -7,7 +7,7 @@ class Nicotine(BaseConsumable):
     strength: int
 
     @classmethod
-    def create(cls, *args, **kwargs):
+    def create(cls, *args, **kwargs) -> 'Nicotine':
         uid = kwargs.pop("_id")
         new_class = cls(**kwargs)
         new_class.uid = uid
