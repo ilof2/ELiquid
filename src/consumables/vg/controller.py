@@ -8,7 +8,7 @@ db_vg_connection = mongodb_client[Config.MONGO_DB_NAME].vg
 
 def insert_vg_one(vg: 'VG', vg_conn=db_vg_connection):
     result = vg_conn.insert_one(vg.dict())
-    vg._cid = result.inserted_id
+    vg.uid = result.inserted_id
     return vg
 
 

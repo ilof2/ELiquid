@@ -1,5 +1,10 @@
 from bson import ObjectId
+from pymongo.database import Database
 from pytest import fixture
+from pymongo import MongoClient
+
+from config import Config
+from users import User
 
 
 @fixture()
@@ -11,6 +16,11 @@ def user_dict():
         "email": "test@test.com",
     }
     return obj
+
+
+@fixture()
+def user_obj(user_dict: dict) -> User:
+    return User.create_new(**user_dict)
 
 
 @fixture()
@@ -72,3 +82,12 @@ def pg_dict():
         "consumable_type": "pg"
     }
     return pg_dict
+
+
+@fixture()
+def test_conn_to_db() -> Database:
+    mongodb_client = MongoClient(Config.TEST_MONGO_URI, retryWrites=False)
+    mongodb_conn = mongodb_client[Config.TEST_MONGO_DB_NAME]
+    yield mongodb_conn
+    mongodb_client.drop_database(Config.TEST_MONGO_DB_NAME)
+    mongodb_client.close()

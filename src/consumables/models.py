@@ -1,4 +1,4 @@
-from pydantic import BaseModel, PrivateAttr, Field
+from pydantic import BaseModel, Field
 from bson import ObjectId
 
 
