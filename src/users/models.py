@@ -6,7 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 
 class User(BaseModel):
-    uid: ObjectId = Field(default_factory=lambda: ObjectId())
+    uid: ObjectId = None
     username: str
     email: str
     password: str

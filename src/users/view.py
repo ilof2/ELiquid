@@ -3,7 +3,7 @@ import graphene
 import flask_jwt_extended as jwt
 
 from . import User
-from .controller import login, register, get_user_by_email, validate_creds_are_uniq
+from .controller import login, register, get_user_by_email, validate_unique_user
 from .schema import UserSchema
 
 
@@ -40,9 +40,6 @@ class LoginUser(graphene.Mutation):
 
 
 class RefreshMutation(graphene.Mutation):
-    class Arguments:
-        refresh_token = graphene.String()
-
     new_token = graphene.String()
 
     @jwt.jwt_required(refresh=True)
@@ -61,7 +58,7 @@ class CreateUser(graphene.Mutation):
     ok = graphene.Boolean()
     user = graphene.Field(lambda: UserSchema)
 
-    @validate_creds_are_uniq
+    @validate_unique_user
     def mutate(root, info, email, username, password):
         user = register(email, username, password)
         user = UserSchema(username=user.username, email=email, uid=user.uid)
