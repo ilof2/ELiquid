@@ -4,11 +4,22 @@ from pytest import fixture
 from pymongo import MongoClient
 
 from config import Config
+from user_related_models.consumables.enums import FlavorType
 from users import User
 
 
 @fixture()
 def user_dict():
+    obj = {
+        "username": "test",
+        "password": "123",
+        "email": "test@test.com",
+    }
+    return obj
+
+
+@fixture()
+def user_dict_db():
     obj = {
         "_id": ObjectId(),
         "username": "test",
@@ -40,8 +51,6 @@ def ten_users_generator():
 @fixture()
 def flavor_dict():
     flavor_dict = {
-        "_id": ObjectId(),
-        "consumable_type": "flavors",
         "flavor_type": "strawberry",
         "amount": 250,
         "name": "MantAna",
@@ -50,15 +59,37 @@ def flavor_dict():
 
 
 @fixture()
+def flavor_dict_db():
+    flavor_dict = {
+        "uid": ObjectId(),
+        "amount": 250,
+        "name": "Melon",
+        "flavor_type": FlavorType.VG.value
+    }
+    return flavor_dict
+
+
+@fixture()
 def nicotine_dict():
     nicotine_dict = {
-        "_id": ObjectId(),
         "amount": 250,
+        "name": "test",
         "pg": 40,
         "vg": 60,
         "strength": 18,
-        "consumable_type": "nicotine"
+    }
+    return nicotine_dict
 
+
+@fixture()
+def nicotine_dict_db():
+    nicotine_dict = {
+        "uid": ObjectId(),
+        "amount": 250,
+        "name": "test",
+        "pg": 40,
+        "vg": 60,
+        "strength": 18,
     }
     return nicotine_dict
 
@@ -66,10 +97,16 @@ def nicotine_dict():
 @fixture()
 def vg_dict():
     vg_dict = {
-        "_id": ObjectId(),
         "amount": 112,
-        "consumable_type": "vg"
+    }
+    return vg_dict
 
+
+@fixture()
+def vg_dict_db():
+    vg_dict = {
+        "uid": ObjectId(),
+        "amount": 112,
     }
     return vg_dict
 
@@ -77,9 +114,16 @@ def vg_dict():
 @fixture()
 def pg_dict():
     pg_dict = {
-        "_id": ObjectId(),
         "amount": 95,
-        "consumable_type": "pg"
+    }
+    return pg_dict
+
+
+@fixture()
+def pg_dict_db():
+    pg_dict = {
+        "uid": ObjectId(),
+        "amount": 95,
     }
     return pg_dict
 

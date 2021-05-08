@@ -1,9 +1,8 @@
-from consumables.pg.models import PG
+from user_related_models.consumables import PG
 
 
-def test_pg_models(pg_dict):
-    pg = PG.create(**pg_dict)
-    assert pg.consumable_type == pg_dict['consumable_type']
-    assert pg.amount == pg_dict['amount']
-    assert pg.uid == pg_dict['_id']
+def test_pg_models(pg_dict_db):
+    pg = PG.create_from_db(**pg_dict_db)
+    assert pg.uid == pg_dict_db['uid']
+    assert pg.amount == pg_dict_db['amount']
 

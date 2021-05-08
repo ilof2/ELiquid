@@ -1,12 +1,10 @@
-from consumables.flavor.models import Flavor
+from user_related_models.consumables.models import Flavor
 
 
-def test_flavor_create(flavor_dict):
-    flavor = Flavor.create(**flavor_dict)
+def test_flavor_create_from_db(flavor_dict_db):
+    flavor = Flavor.create_from_db(**flavor_dict_db)
     assert flavor
-    assert flavor.name == flavor_dict['name'].strip()
-    assert flavor.uid == flavor_dict['_id']
-    assert flavor.flavor_type == flavor_dict['flavor_type'].strip()
-    assert flavor.consumable_type == flavor_dict['consumable_type']
-    assert flavor.amount == flavor_dict['amount']
-
+    assert flavor.name == flavor_dict_db['name'].strip()
+    assert flavor.uid == flavor_dict_db['uid']
+    assert flavor.flavor_type.value == flavor_dict_db['flavor_type'].strip()
+    assert flavor.amount == flavor_dict_db['amount']

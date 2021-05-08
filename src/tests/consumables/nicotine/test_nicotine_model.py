@@ -1,12 +1,12 @@
-from consumables.nicotine.models import Nicotine
+from user_related_models.consumables import Nicotine
 
 
-def nicotine_create(nicotine_dict):
-    nicotine = Nicotine.create(**nicotine_dict)
+def nicotine_create(nicotine_dict_db):
+    nicotine = Nicotine.create_from_db(**nicotine_dict_db)
     assert nicotine
-    assert nicotine.strength == nicotine_dict['strength']
-    assert nicotine.uid == nicotine_dict['_id']
-    assert nicotine.pg == nicotine_dict['pg']
-    assert nicotine.vg == nicotine_dict['vg']
-    assert nicotine.amount == nicotine.dict['amount']
+    assert nicotine.strength == nicotine_dict_db['strength']
+    assert nicotine.uid == nicotine_dict_db['_id']
+    assert nicotine.pg == nicotine_dict_db['pg']
+    assert nicotine.vg == nicotine_dict_db['vg']
+    assert nicotine.amount == nicotine_dict_db['amount']
     assert nicotine.consumable_type == ['consumable_type']
