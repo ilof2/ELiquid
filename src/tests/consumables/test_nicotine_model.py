@@ -9,4 +9,3 @@ def nicotine_create(nicotine_dict_db):
     assert nicotine.pg == nicotine_dict_db['pg']
     assert nicotine.vg == nicotine_dict_db['vg']
     assert nicotine.amount == nicotine_dict_db['amount']
-    assert nicotine.consumable_type == ['consumable_type']

@@ -1,9 +1,10 @@
 from bson import ObjectId
 from pymongo.database import Database
 from pytest import fixture
-from pymongo import MongoClient
 
 from config import Config
+from database import mongo_connection, mongodb_client
+from subscriptions import init_subscriptions, remove_subscriptions
 from user_related_models.consumables.enums import FlavorType
 from users import User
 
@@ -61,7 +62,7 @@ def flavor_dict():
 @fixture()
 def flavor_dict_db():
     flavor_dict = {
-        "uid": ObjectId(),
+        "_id": ObjectId(),
         "amount": 250,
         "name": "Melon",
         "flavor_type": FlavorType.VG.value
@@ -84,7 +85,7 @@ def nicotine_dict():
 @fixture()
 def nicotine_dict_db():
     nicotine_dict = {
-        "uid": ObjectId(),
+        "_id": ObjectId(),
         "amount": 250,
         "name": "test",
         "pg": 40,
@@ -105,7 +106,7 @@ def vg_dict():
 @fixture()
 def vg_dict_db():
     vg_dict = {
-        "uid": ObjectId(),
+        "_id": ObjectId(),
         "amount": 112,
     }
     return vg_dict
@@ -122,16 +123,21 @@ def pg_dict():
 @fixture()
 def pg_dict_db():
     pg_dict = {
-        "uid": ObjectId(),
+        "_id": ObjectId(),
         "amount": 95,
     }
     return pg_dict
 
 
-@fixture()
+@fixture(autouse=True)
 def test_conn_to_db() -> Database:
-    mongodb_client = MongoClient(Config.TEST_MONGO_URI, retryWrites=False)
-    mongodb_conn = mongodb_client[Config.TEST_MONGO_DB_NAME]
-    yield mongodb_conn
+    yield mongo_connection
     mongodb_client.drop_database(Config.TEST_MONGO_DB_NAME)
     mongodb_client.close()
+
+
+@fixture(autouse=True)
+def init_subs():
+    init_subscriptions()
+    yield
+    remove_subscriptions()

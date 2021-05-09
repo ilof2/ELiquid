@@ -20,7 +20,7 @@ def test_user_create_from_list(ten_users_generator):
 
 
 def test_id_is_mutable(user_dict_db):
-    user = User.create_from_dict(**user_dict_db)
+    user = User.create_from_dict_db(**user_dict_db)
     user_id = user.uid
     from bson import ObjectId
     user.uid = ObjectId()
