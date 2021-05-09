@@ -1,4 +1,4 @@
-from user_related_models.controller import get_user_info
+from user_info.controller import get_user_info
 from users.controller import register
 
 

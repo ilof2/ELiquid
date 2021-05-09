@@ -1,7 +1,7 @@
 from bson import ObjectId
 from pydantic import BaseModel, parse_obj_as
 
-from user_related_models.consumables.models import Consumables
+from user_info.consumables.models import Consumables
 
 
 class UserInfo(BaseModel):

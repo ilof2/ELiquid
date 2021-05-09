@@ -1,7 +1,7 @@
 from bson import ObjectId
 
-from user_related_models.controller import init_user_info, get_user_info
-from user_related_models.models import UserInfo
+from user_info.controller import init_user_info, get_user_info
+from user_info.models import UserInfo
 
 
 def test_init_and_get_user_info():

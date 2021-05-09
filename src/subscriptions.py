@@ -1,5 +1,5 @@
 import signals
-from user_related_models.controller import init_user_info
+from user_info.controller import init_user_info
 
 
 def init_subscriptions():

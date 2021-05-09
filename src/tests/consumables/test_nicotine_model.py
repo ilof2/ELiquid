@@ -1,4 +1,4 @@
-from user_related_models.consumables import Nicotine
+from user_info.consumables import Nicotine
 
 
 def nicotine_create(nicotine_dict_db):

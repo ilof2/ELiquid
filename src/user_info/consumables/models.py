@@ -3,7 +3,7 @@ from typing import List
 from bson import ObjectId
 from pydantic import BaseModel, Field, parse_obj_as
 
-from user_related_models.consumables.enums import FlavorType
+from user_info.consumables.enums import FlavorType
 
 
 class Nicotine(BaseModel):

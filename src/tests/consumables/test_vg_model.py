@@ -1,4 +1,4 @@
-from user_related_models.consumables import VG
+from user_info.consumables import VG
 
 
 def test_vg_from_db(vg_dict_db):

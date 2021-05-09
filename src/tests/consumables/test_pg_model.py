@@ -1,4 +1,4 @@
-from user_related_models.consumables import PG
+from user_info.consumables import PG
 
 
 def test_pg_models(pg_dict_db):

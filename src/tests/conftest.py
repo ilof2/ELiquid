@@ -5,7 +5,7 @@ from pytest import fixture
 from config import Config
 from database import mongo_connection, mongodb_client
 from subscriptions import init_subscriptions, remove_subscriptions
-from user_related_models.consumables.enums import FlavorType
+from user_info.consumables.enums import FlavorType
 from users import User
 
 

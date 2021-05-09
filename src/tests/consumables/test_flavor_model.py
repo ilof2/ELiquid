@@ -1,4 +1,4 @@
-from user_related_models.consumables.models import Flavor
+from user_info.consumables.models import Flavor
 
 
 def test_flavor_create_from_db(flavor_dict_db):
